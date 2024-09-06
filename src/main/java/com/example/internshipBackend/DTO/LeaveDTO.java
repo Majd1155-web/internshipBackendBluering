@@ -1,7 +1,8 @@
 package com.example.internshipBackend.DTO;
 
 import lombok.Data;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.util.Date;
 
 @Data
 public class LeaveDTO {
