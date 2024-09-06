@@ -6,7 +6,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.Objects;
 
 @Setter
 @Getter
