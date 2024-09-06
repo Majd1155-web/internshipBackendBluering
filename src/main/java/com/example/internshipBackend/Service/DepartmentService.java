@@ -42,6 +42,17 @@ public class DepartmentService {
                 .collect(Collectors.toList());
     }
 
+    public List<DepartmentDTO> GetDepartmentById(Integer id) {
+        return departmentRepository.findById(id)
+                .stream()
+                .map(department -> {
+                    DepartmentDTO departmentDTO = departmentMapper.DepartmentEntityToDepartmentDTO(department);
+                    return departmentDTO;
+                })
+                .collect(Collectors.toList());
+    }
+
+
     public void UpdateDepartment( Integer id, Map<String, Object> departmentDTO) {
         DepartmentEntity department = departmentRepository.findById(id).get();
         generalService.updateEntity(departmentDTO, department, DepartmentEntity.class);

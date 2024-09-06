@@ -31,6 +31,12 @@ public class DepartmentController {
         return departmentService.GetDepartments();
     }
 
+    @GetMapping("getDepartmentById/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<?> GetDepartmentById(@PathVariable Integer id) {
+        return departmentService.GetDepartmentById(id);
+    }
+
     @PatchMapping("updateDepartment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateDepartment(@PathVariable Integer id, @RequestBody Map<String, Object> departmentDTO) {
