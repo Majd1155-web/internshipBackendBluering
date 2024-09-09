@@ -7,6 +7,9 @@ import com.example.internshipBackend.entity.ExpenseclaimentryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,12 +25,32 @@ public class ExpenseClaimEntryService {
 
     private final ExpenseClaimEntryRepository expenseClaimEntryRepository;
 
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public ExpenseClaimEntryService(ExpenseClaimEntryRepository expenseClaimEntryRepository) {
         this.expenseClaimEntryRepository = expenseClaimEntryRepository;
     }
 
     public void CreateExpenseClaimEntry(Map<String, Object> expenseClaimEntryDTO) {
         ExpenseclaimentryEntity expenseClaimEntry = new ExpenseclaimentryEntity();
+        if(expenseClaimEntryDTO.containsKey("date")) {
+            String dateString = (String) expenseClaimEntryDTO.get("date");
+            try {
+                expenseClaimEntry.setDate( dateFormat.parse(dateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            expenseClaimEntryDTO.remove("date");
+        }
+        if (expenseClaimEntryDTO.containsKey("total")) {
+            Object totalValue = expenseClaimEntryDTO.get("total");
+            if (totalValue instanceof Double) {
+                expenseClaimEntry.setTotal(BigDecimal.valueOf((Double) totalValue));
+            } else if (totalValue instanceof Integer) {
+                expenseClaimEntry.setTotal(BigDecimal.valueOf((Integer) totalValue));
+            }
+            expenseClaimEntryDTO.remove("total");
+        }
         generalService.updateEntity(expenseClaimEntryDTO, expenseClaimEntry, ExpenseclaimentryEntity.class);
         expenseClaimEntryRepository.saveAndFlush(expenseClaimEntry);
     }
@@ -54,6 +77,24 @@ public class ExpenseClaimEntryService {
 
     public void UpdateExpenseClaimEntry(Integer id, Map<String, Object> expenseClaimEntryDTO) {
         ExpenseclaimentryEntity expenseClaimEntry = expenseClaimEntryRepository.findById(id).get();
+        if(expenseClaimEntryDTO.containsKey("date")) {
+            String dateString = (String) expenseClaimEntryDTO.get("date");
+            try {
+                expenseClaimEntry.setDate( dateFormat.parse(dateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            expenseClaimEntryDTO.remove("date");
+        }
+        if (expenseClaimEntryDTO.containsKey("total")) {
+            Object totalValue = expenseClaimEntryDTO.get("total");
+            if (totalValue instanceof Double) {
+                expenseClaimEntry.setTotal(BigDecimal.valueOf((Double) totalValue));
+            } else if (totalValue instanceof Integer) {
+                expenseClaimEntry.setTotal(BigDecimal.valueOf((Integer) totalValue));
+            }
+            expenseClaimEntryDTO.remove("total");
+        }
         generalService.updateEntity(expenseClaimEntryDTO, expenseClaimEntry, ExpenseclaimentryEntity.class);
         expenseClaimEntryRepository.saveAndFlush(expenseClaimEntry);
     }
