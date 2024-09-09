@@ -99,6 +99,24 @@ public class LeaveService {
 
     public void UpdateLeaves(Integer id, Map<String, Object> leaveDTO) {
         LeaveEntity leave = leaveRepository.findById(id).get();
+        if (leaveDTO.containsKey("from")) {
+            String fromDateString = (String) leaveDTO.get("from");
+            try {
+                leave.setFrom(dateFormat.parse(fromDateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            leaveDTO.remove("from");
+        }
+        if (leaveDTO.containsKey("to")) {
+            String toDateString = (String) leaveDTO.get("to");
+            try {
+                leave.setTo(dateFormat.parse(toDateString));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            leaveDTO.remove("to");
+        }
         generalService.updateEntity(leaveDTO, leave, LeaveEntity.class);
         leaveRepository.saveAndFlush(leave);
     }
