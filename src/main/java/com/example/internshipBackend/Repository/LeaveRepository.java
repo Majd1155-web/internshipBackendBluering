@@ -12,6 +12,6 @@ import java.util.List;
 
 @Repository
 public interface LeaveRepository extends JpaRepository<LeaveEntity, Integer> {
-    List<LeaveEntity> findByFromAndTo(Date from, Date to);
+    List<LeaveEntity> findByFromGreaterThanEqualAndToLessThanEqual(Date from, Date to);
     Page<LeaveEntity> findByEmployeeIdAndLeaveType(Integer employeeId, Integer leaveType, Pageable pageable);
 }

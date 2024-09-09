@@ -80,7 +80,7 @@ public class LeaveService {
     }
 
     public List<LeaveDTO> GetLeavesByDate(Date from, Date to) {
-        return leaveRepository.findByFromAndTo(from, to)
+        return leaveRepository.findByFromGreaterThanEqualAndToLessThanEqual(from, to)
                 .stream()
                 .map(leave -> {
                     LeaveDTO leaveDTO = leaveMapper.LeaveEntityToLeaveDTO(leave);

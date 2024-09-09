@@ -1,9 +1,16 @@
 package com.example.internshipBackend.Controller;
 
+import com.example.internshipBackend.DTO.LeaveDTO;
 import com.example.internshipBackend.Service.LeaveService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -35,6 +42,29 @@ public class LeaveController {
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetLeavesById(@PathVariable Integer id) {
         return leaveService.GetLeavesById(id);
+    }
+
+    @GetMapping("getLeaveByEmpAndType/{employeeId}/{leaveTypeId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Page<?> GetLeavesByEmpAndId(@PathVariable Integer employeeId, @PathVariable Integer leaveTypeId, Pageable pageable) {
+        return leaveService.GetLeaveByTypeAndEmployee(employeeId, leaveTypeId, pageable);
+    }
+
+    @PostMapping("getLeaveByDateRange")
+    @ResponseStatus(HttpStatus.OK)
+    public List<LeaveDTO> getLeavesByDateRange(@RequestBody Map<String, Object> dateRange) {
+        String fromString = (String) dateRange.get("from");
+        String toString = (String) dateRange.get("to");
+        Date from = null;
+        Date to = null;
+        try {
+            from = new SimpleDateFormat("yyyy-MM-dd").parse(fromString);
+            to = new SimpleDateFormat("yyyy-MM-dd").parse(toString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format");
+        }
+        return leaveService.GetLeavesByDate(from, to);
     }
 
     @PatchMapping("updateLeave/{id}")
