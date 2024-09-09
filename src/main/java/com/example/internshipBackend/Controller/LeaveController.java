@@ -69,7 +69,7 @@ public class LeaveController {
 
     @PatchMapping("updateLeave/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String UpdateLeave(@PathVariable Integer id, Map<String, Object> leaveDTO) {
+    public String UpdateLeave(@PathVariable Integer id, @RequestBody Map<String, Object> leaveDTO) {
         leaveService.UpdateLeaves(id, leaveDTO);
         return "leave update successfully";
     }
