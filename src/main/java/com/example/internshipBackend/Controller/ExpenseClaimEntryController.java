@@ -1,7 +1,6 @@
 package com.example.internshipBackend.Controller;
 
 import com.example.internshipBackend.Service.ExpenseClaimEntryService;
-import com.example.internshipBackend.Service.ExpenseClaimService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
