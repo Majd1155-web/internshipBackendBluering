@@ -3,7 +3,9 @@ package com.example.internshipBackend.Service;
 import com.example.internshipBackend.DTO.ExpenseClaimEntryDTO;
 import com.example.internshipBackend.Mapper.ExpenseClaimEntryMapper;
 import com.example.internshipBackend.Repository.ExpenseClaimEntryRepository;
+import com.example.internshipBackend.Repository.ExpenseClaimRepository;
 import com.example.internshipBackend.entity.ExpenseclaimentryEntity;
+import com.example.internshipBackend.entity.ExpenseclaimEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,10 +27,13 @@ public class ExpenseClaimEntryService {
 
     private final ExpenseClaimEntryRepository expenseClaimEntryRepository;
 
+    private final ExpenseClaimRepository expenseClaimRepository;
+
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ExpenseClaimEntryService(ExpenseClaimEntryRepository expenseClaimEntryRepository) {
+    public ExpenseClaimEntryService(ExpenseClaimEntryRepository expenseClaimEntryRepository, ExpenseClaimRepository expenseClaimRepository) {
         this.expenseClaimEntryRepository = expenseClaimEntryRepository;
+        this.expenseClaimRepository = expenseClaimRepository;
     }
 
     public void CreateExpenseClaimEntry(Map<String, Object> expenseClaimEntryDTO) {
@@ -53,6 +58,8 @@ public class ExpenseClaimEntryService {
         }
         generalService.updateEntity(expenseClaimEntryDTO, expenseClaimEntry, ExpenseclaimentryEntity.class);
         expenseClaimEntryRepository.saveAndFlush(expenseClaimEntry);
+
+        updateExpenseClaimTotal(expenseClaimEntry.getExpenseClaim());
     }
 
     public List<ExpenseClaimEntryDTO> GetExpenseClaimEntry() {
@@ -97,9 +104,30 @@ public class ExpenseClaimEntryService {
         }
         generalService.updateEntity(expenseClaimEntryDTO, expenseClaimEntry, ExpenseclaimentryEntity.class);
         expenseClaimEntryRepository.saveAndFlush(expenseClaimEntry);
+
+        updateExpenseClaimTotal(expenseClaimEntry.getExpenseClaim());
     }
 
     public void DeleteExpenseClaimEntry(Integer id) {
-        expenseClaimEntryRepository.deleteById(id);
+        ExpenseclaimentryEntity expenseClaimEntry = expenseClaimEntryRepository.findById(id).orElse(null);
+        if (expenseClaimEntry != null) {
+            expenseClaimEntryRepository.deleteById(id);
+
+            updateExpenseClaimTotal(expenseClaimEntry.getExpenseClaim());
+        }
+    }
+
+    private void updateExpenseClaimTotal(Integer claimId) {
+        List<ExpenseclaimentryEntity> entries = expenseClaimEntryRepository.findByExpenseClaim(claimId);
+        BigDecimal totalSum = entries.stream()
+                .map(ExpenseclaimentryEntity::getTotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        ExpenseclaimEntity expenseClaim = expenseClaimRepository.findById(claimId)
+                .orElseThrow(() -> new RuntimeException("Expense claim not found"));
+
+        expenseClaim.setTotal(totalSum);
+
+        expenseClaimRepository.save(expenseClaim);
     }
 }
