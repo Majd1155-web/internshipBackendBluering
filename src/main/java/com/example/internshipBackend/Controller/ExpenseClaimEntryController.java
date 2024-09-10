@@ -5,6 +5,7 @@ import com.example.internshipBackend.Service.ExpenseClaimService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -50,5 +51,11 @@ public class ExpenseClaimEntryController {
     public String DeleteExpenseClaimEntry(@PathVariable Integer id) {
         expenseClaimEntryService.DeleteExpenseClaimEntry(id);
         return "expense claim entry deleted successfully";
+    }
+
+    @GetMapping("getTotalClaimsByTypeForEmployee/{employeeId}")
+    @ResponseStatus(HttpStatus.OK)
+    public Map<String, BigDecimal> getTotalClaimsByTypeForEmployee(@PathVariable Integer employeeId) {
+        return expenseClaimEntryService.getTotalClaimsByTypeForEmployee(employeeId);
     }
 }

@@ -6,6 +6,7 @@ import com.example.internshipBackend.Repository.ExpenseClaimEntryRepository;
 import com.example.internshipBackend.Repository.ExpenseClaimRepository;
 import com.example.internshipBackend.entity.ExpenseclaimentryEntity;
 import com.example.internshipBackend.entity.ExpenseclaimEntity;
+import com.example.internshipBackend.entity.ExpensetypeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -122,12 +123,17 @@ public class ExpenseClaimEntryService {
         BigDecimal totalSum = entries.stream()
                 .map(ExpenseclaimentryEntity::getTotal)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-
         ExpenseclaimEntity expenseClaim = expenseClaimRepository.findById(claimId)
                 .orElseThrow(() -> new RuntimeException("Expense claim not found"));
-
         expenseClaim.setTotal(totalSum);
-
         expenseClaimRepository.save(expenseClaim);
+    }
+
+    public Map<String, BigDecimal> getTotalClaimsByTypeForEmployee(Integer employeeId) {
+        List<Object[]> results = expenseClaimEntryRepository.findTotalClaimsByTypeForEmployee(employeeId);
+        return results.stream().collect(Collectors.toMap(
+                result -> (String) result[0],
+                result -> (BigDecimal) result[1]
+        ));
     }
 }
