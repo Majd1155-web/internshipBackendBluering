@@ -28,26 +28,26 @@ public class LeaveController {
     @PostMapping("createLeave")
     @ResponseStatus(HttpStatus.OK)
     public String CreateLeave(@RequestBody Map<String, Object> leaveDTO) {
-        leaveService.CreateLeave(leaveDTO);
+        leaveService.createLeave(leaveDTO);
         return "Leave created successfully";
     }
 
     @GetMapping("getLeaves")
     @ResponseStatus(HttpStatus.OK)
     public List<?> getLeaves() {
-        return leaveService.GetLeaves();
+        return leaveService.getLeaves();
     }
 
     @GetMapping("getLeaveById/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetLeavesById(@PathVariable Integer id) {
-        return leaveService.GetLeavesById(id);
+        return leaveService.getLeavesById(id);
     }
 
     @GetMapping("getLeaveByEmpAndType/{employeeId}/{leaveTypeId}")
     @ResponseStatus(HttpStatus.OK)
     public Page<?> GetLeavesByEmpAndId(@PathVariable Integer employeeId, @PathVariable Integer leaveTypeId, Pageable pageable) {
-        return leaveService.GetLeaveByTypeAndEmployee(employeeId, leaveTypeId, pageable);
+        return leaveService.getLeaveByTypeAndEmployee(employeeId, leaveTypeId, pageable);
     }
 
     @PostMapping("getLeaveByDateRange")
@@ -64,20 +64,20 @@ public class LeaveController {
             e.printStackTrace();
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format");
         }
-        return leaveService.GetLeavesByDate(from, to);
+        return leaveService.getLeavesByDate(from, to);
     }
 
     @PatchMapping("updateLeave/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateLeave(@PathVariable Integer id, @RequestBody Map<String, Object> leaveDTO) {
-        leaveService.UpdateLeaves(id, leaveDTO);
+        leaveService.updateLeaves(id, leaveDTO);
         return "leave update successfully";
     }
 
     @DeleteMapping("deleteLeave/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String DeleteLeave(@PathVariable Integer id) {
-        leaveService.DeleteLeave(id);
+        leaveService.deleteLeave(id);
         return "Leave deleted successfully";
     }
 }

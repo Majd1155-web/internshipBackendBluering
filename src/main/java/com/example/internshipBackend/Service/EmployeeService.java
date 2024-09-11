@@ -30,13 +30,13 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public void CreateEmployee(Map<String, Object> employeeDTO) {
+    public void createEmployee(Map<String, Object> employeeDTO) {
         EmployeeEntity employee = new EmployeeEntity();
         generalService.updateEntity(employeeDTO, employee, EmployeeEntity.class);
         employeeRepository.saveAndFlush(employee);
     }
 
-    public List<EmployeeDTO> GetEmployees() {
+    public List<EmployeeDTO> getEmployees() {
         return employeeRepository.findAll()
                 .stream()
                 .map(employee -> {
@@ -46,7 +46,7 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> GetEmployeeById(Integer id) {
+    public List<EmployeeDTO> getEmployeeById(Integer id) {
         return employeeRepository.findById(id)
                 .stream()
                 .map(employee -> {
@@ -56,7 +56,7 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public List<EmployeeDTO> GetEmployeeByDepartment(Integer id) {
+    public List<EmployeeDTO> getEmployeeByDepartment(Integer id) {
         return employeeRepository.findByDepartmentId(id)
                 .stream()
                 .map(employee -> {
@@ -67,13 +67,13 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public void UpdateEmployee(Integer id, Map<String, Object> employeeDTO) {
+    public void updateEmployee(Integer id, Map<String, Object> employeeDTO) {
         EmployeeEntity employee =  employeeRepository.findById(id).get();
         generalService.updateEntity(employeeDTO, employee, EmployeeEntity.class);
         employeeRepository.saveAndFlush(employee);
     }
 
-    public void DeleteEmployee(Integer id) {
+    public void deleteEmployee(Integer id) {
         employeeRepository.deleteById(id);
     }
 }

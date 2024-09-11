@@ -21,33 +21,33 @@ public class ExpenseClaimController {
     @PostMapping("createExpenseClaim")
     @ResponseStatus(HttpStatus.OK)
     public String CreateExpenseClaim(@RequestBody Map<String, Object> expenseClaimDTO) {
-        expenseClaimService.CreateExpenseClaim(expenseClaimDTO);
+        expenseClaimService.createExpenseClaim(expenseClaimDTO);
         return "expense claim created successfully";
     }
 
     @GetMapping("getExpenseClaims")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetExpenseClaims() {
-        return expenseClaimService.GetExpenseClaim();
+        return expenseClaimService.getExpenseClaim();
     }
 
     @GetMapping("getExpenseClaimById/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetExpenseClaimById(@PathVariable Integer id) {
-        return expenseClaimService.GetExpenseClaimById(id);
+        return expenseClaimService.getExpenseClaimById(id);
     }
 
     @PatchMapping("updateExpenseClaim/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateExpenseClaim(@PathVariable Integer id, @RequestBody Map<String, Object> expenseClaimDTO) {
-        expenseClaimService.UpdateExpenseClaim(id, expenseClaimDTO);
+        expenseClaimService.updateExpenseClaim(id, expenseClaimDTO);
         return "expense claim updated successfully";
     }
 
     @DeleteMapping("deleteExpenseClaim/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String DeleteExpenseClaim(@PathVariable Integer id) {
-        expenseClaimService.DeleteExpenseClaim(id);
+        expenseClaimService.deleteExpenseClaim(id);
         return "expense claim deleted successfully";
     }
 }

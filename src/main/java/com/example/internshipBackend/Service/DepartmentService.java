@@ -26,13 +26,13 @@ public class DepartmentService {
         this.departmentRepository = departmentRepository;
     }
 
-    public void CreateDepartment(Map<String, Object> departmentDTO) {
+    public void createDepartment(Map<String, Object> departmentDTO) {
         DepartmentEntity department = new DepartmentEntity();
         generalService.updateEntity(departmentDTO, department, DepartmentEntity.class);
         departmentRepository.saveAndFlush(department);
     }
 
-    public List<DepartmentDTO> GetDepartments() {
+    public List<DepartmentDTO> getDepartments() {
         return departmentRepository.findAll()
                 .stream()
                 .map(department -> {
@@ -42,7 +42,7 @@ public class DepartmentService {
                 .collect(Collectors.toList());
     }
 
-    public List<DepartmentDTO> GetDepartmentById(Integer id) {
+    public List<DepartmentDTO> getDepartmentById(Integer id) {
         return departmentRepository.findById(id)
                 .stream()
                 .map(department -> {
@@ -53,13 +53,13 @@ public class DepartmentService {
     }
 
 
-    public void UpdateDepartment( Integer id, Map<String, Object> departmentDTO) {
+    public void updateDepartment( Integer id, Map<String, Object> departmentDTO) {
         DepartmentEntity department = departmentRepository.findById(id).get();
         generalService.updateEntity(departmentDTO, department, DepartmentEntity.class);
         departmentRepository.saveAndFlush(department);
     }
 
-    public void DeleteDepartment(Integer id) {
+    public void deleteDepartment(Integer id) {
         departmentRepository.deleteById(id);
     }
 }

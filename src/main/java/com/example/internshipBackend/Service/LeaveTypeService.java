@@ -26,13 +26,13 @@ public class LeaveTypeService {
         this.leaveTypeRepository = leaveTypeRepository;
     }
 
-    public void CreateLeaveType(Map<String, Object> leaveTypeDTO) {
+    public void createLeaveType(Map<String, Object> leaveTypeDTO) {
         LeavetypeEntity leaveType = new LeavetypeEntity();
         generalService.updateEntity(leaveTypeDTO, leaveType, LeavetypeEntity.class);
         leaveTypeRepository.saveAndFlush(leaveType);
     }
 
-    public List<LeaveTypeDTO> GetLeaveTypes() {
+    public List<LeaveTypeDTO> getLeaveTypes() {
         return leaveTypeRepository.findAll()
                 .stream()
                 .map(leaveType -> {
@@ -42,7 +42,7 @@ public class LeaveTypeService {
                 .collect(Collectors.toList());
     }
 
-    public List<LeaveTypeDTO> GetLeaveTypesById(Integer id) {
+    public List<LeaveTypeDTO> getLeaveTypesById(Integer id) {
         return leaveTypeRepository.findById(id)
                 .stream()
                 .map(leaveType -> {
@@ -52,13 +52,13 @@ public class LeaveTypeService {
                 .collect(Collectors.toList());
     }
 
-    public void UpdateLeaveTypes(Integer id, Map<String, Object> leaveTypeDTO) {
+    public void updateLeaveTypes(Integer id, Map<String, Object> leaveTypeDTO) {
         LeavetypeEntity leaveType = leaveTypeRepository.findById(id).get();
         generalService.updateEntity(leaveTypeDTO, leaveType, LeavetypeEntity.class);
         leaveTypeRepository.saveAndFlush(leaveType);
     }
 
-    public void DeleteLeaveType(Integer id) {
+    public void deleteLeaveType(Integer id) {
         leaveTypeRepository.deleteById(id);
     }
 }

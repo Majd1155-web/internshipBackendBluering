@@ -21,33 +21,33 @@ public class DepartmentController {
     @PostMapping("createDepartment")
     @ResponseStatus(HttpStatus.OK)
     public String CreateDepartment(@RequestBody Map<String, Object> departmentDTO) {
-        departmentService.CreateDepartment(departmentDTO);
+        departmentService.createDepartment(departmentDTO);
         return "Department created successfully";
     }
 
     @GetMapping("getDepartments")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetDepartments() {
-        return departmentService.GetDepartments();
+        return departmentService.getDepartments();
     }
 
     @GetMapping("getDepartmentById/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetDepartmentById(@PathVariable Integer id) {
-        return departmentService.GetDepartmentById(id);
+        return departmentService.getDepartmentById(id);
     }
 
     @PatchMapping("updateDepartment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateDepartment(@PathVariable Integer id, @RequestBody Map<String, Object> departmentDTO) {
-        departmentService.UpdateDepartment(id, departmentDTO);
+        departmentService.updateDepartment(id, departmentDTO);
         return "Department updated successfully";
     }
 
     @DeleteMapping("deleteDepartment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String DeleteDepartment(@PathVariable Integer id) {
-        departmentService.DeleteDepartment(id);
+        departmentService.deleteDepartment(id);
         return "Department deleted successfully";
     }
 }

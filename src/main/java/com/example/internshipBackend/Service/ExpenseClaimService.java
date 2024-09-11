@@ -32,7 +32,7 @@ public class ExpenseClaimService {
          this.expenseClaimRepository = expenseClaimRepository;
      }
 
-     public void CreateExpenseClaim(Map<String, Object> expenseClaimDTO) {
+     public void createExpenseClaim(Map<String, Object> expenseClaimDTO) {
          ExpenseclaimEntity expenseClaim = new ExpenseclaimEntity();
          if(expenseClaimDTO.containsKey("date")) {
              String dateString = (String) expenseClaimDTO.get("date");
@@ -56,7 +56,7 @@ public class ExpenseClaimService {
          expenseClaimRepository.saveAndFlush(expenseClaim);
      }
 
-     public List<ExpenseClaimDTO> GetExpenseClaim() {
+     public List<ExpenseClaimDTO> getExpenseClaim() {
          return expenseClaimRepository.findAll()
                  .stream()
                  .map(expenseClaim -> {
@@ -66,7 +66,7 @@ public class ExpenseClaimService {
                  .collect(Collectors.toList());
      }
 
-    public List<ExpenseClaimDTO> GetExpenseClaimById(Integer id) {
+    public List<ExpenseClaimDTO> getExpenseClaimById(Integer id) {
         return expenseClaimRepository.findById(id)
                 .stream()
                 .map(expenseClaim -> {
@@ -76,7 +76,7 @@ public class ExpenseClaimService {
                 .collect(Collectors.toList());
     }
 
-    public void UpdateExpenseClaim(Integer id, Map<String, Object> expenseClaimDTO) {
+    public void updateExpenseClaim(Integer id, Map<String, Object> expenseClaimDTO) {
          ExpenseclaimEntity expenseClaim = expenseClaimRepository.findById(id).get();
         if(expenseClaimDTO.containsKey("date")) {
             String dateString = (String) expenseClaimDTO.get("date");
@@ -100,7 +100,7 @@ public class ExpenseClaimService {
          expenseClaimRepository.saveAndFlush(expenseClaim);
     }
 
-    public void DeleteExpenseClaim(Integer id) {
+    public void deleteExpenseClaim(Integer id) {
          expenseClaimRepository.deleteById(id);
     }
 }

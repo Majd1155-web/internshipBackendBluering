@@ -35,7 +35,7 @@ public class LeaveService {
         this.leaveRepository = leaveRepository;
     }
 
-    public void CreateLeave(Map<String, Object> leaveDTO) {
+    public void createLeave(Map<String, Object> leaveDTO) {
         LeaveEntity leave = new LeaveEntity();
         if (leaveDTO.containsKey("from")) {
             String fromDateString = (String) leaveDTO.get("from");
@@ -59,7 +59,7 @@ public class LeaveService {
         leaveRepository.saveAndFlush(leave);
     }
 
-    public List<LeaveDTO> GetLeaves() {
+    public List<LeaveDTO> getLeaves() {
         return leaveRepository.findAll()
                 .stream()
                 .map(leave -> {
@@ -69,7 +69,7 @@ public class LeaveService {
                 .collect(Collectors.toList());
     }
 
-    public List<LeaveDTO> GetLeavesById(Integer id) {
+    public List<LeaveDTO> getLeavesById(Integer id) {
         return leaveRepository.findById(id)
                 .stream()
                 .map(leave -> {
@@ -79,7 +79,7 @@ public class LeaveService {
                 .collect(Collectors.toList());
     }
 
-    public List<LeaveDTO> GetLeavesByDate(Date from, Date to) {
+    public List<LeaveDTO> getLeavesByDate(Date from, Date to) {
         return leaveRepository.findByFromGreaterThanEqualAndToLessThanEqual(from, to)
                 .stream()
                 .map(leave -> {
@@ -89,7 +89,7 @@ public class LeaveService {
                 .collect(Collectors.toList());
     }
 
-    public Page<LeaveDTO> GetLeaveByTypeAndEmployee(Integer employeeId, Integer LeaveType, Pageable pageable) {
+    public Page<LeaveDTO> getLeaveByTypeAndEmployee(Integer employeeId, Integer LeaveType, Pageable pageable) {
         return leaveRepository.findByEmployeeIdAndLeaveType(employeeId, LeaveType, pageable)
                 .map(leave -> {
                     LeaveDTO leaveDTO = leaveMapper.LeaveEntityToLeaveDTO(leave);
@@ -97,7 +97,7 @@ public class LeaveService {
                 });
     }
 
-    public void UpdateLeaves(Integer id, Map<String, Object> leaveDTO) {
+    public void updateLeaves(Integer id, Map<String, Object> leaveDTO) {
         LeaveEntity leave = leaveRepository.findById(id).get();
         if (leaveDTO.containsKey("from")) {
             String fromDateString = (String) leaveDTO.get("from");
@@ -121,7 +121,7 @@ public class LeaveService {
         leaveRepository.saveAndFlush(leave);
     }
 
-    public void DeleteLeave(Integer id) {
+    public void deleteLeave(Integer id) {
         leaveRepository.deleteById(id);
     }
 }

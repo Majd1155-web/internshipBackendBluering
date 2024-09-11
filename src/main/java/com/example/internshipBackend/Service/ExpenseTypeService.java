@@ -27,13 +27,13 @@ public class ExpenseTypeService {
         this.expenseTypeRepository = expenseTypeRepository;
     }
 
-    public void CreateExpenseType(Map<String, Object> expenseTypeDTO) {
+    public void createExpenseType(Map<String, Object> expenseTypeDTO) {
         ExpensetypeEntity expenseType = new ExpensetypeEntity();
         generalService.updateEntity(expenseTypeDTO, expenseType, ExpensetypeEntity.class);
         expenseTypeRepository.saveAndFlush(expenseType);
     }
 
-    public List<ExpenseTypeDTO> GetExpenseType() {
+    public List<ExpenseTypeDTO> getExpenseType() {
         return expenseTypeRepository.findAll()
                 .stream()
                 .map(expenseType -> {
@@ -43,7 +43,7 @@ public class ExpenseTypeService {
                 .collect(Collectors.toList());
     }
 
-    public List<ExpenseTypeDTO> GetExpenseTypeById(Integer id) {
+    public List<ExpenseTypeDTO> getExpenseTypeById(Integer id) {
         return expenseTypeRepository.findById(id)
                 .stream()
                 .map(expenseType -> {
@@ -53,13 +53,13 @@ public class ExpenseTypeService {
                 .collect(Collectors.toList());
     }
 
-    public void UpdateExpenseType(Integer id, Map<String, Object> expenseTypeDTO) {
+    public void updateExpenseType(Integer id, Map<String, Object> expenseTypeDTO) {
         ExpensetypeEntity expenseType = expenseTypeRepository.findById(id).get();
         generalService.updateEntity(expenseTypeDTO, expenseType, ExpensetypeEntity.class);
         expenseTypeRepository.saveAndFlush(expenseType);
     }
 
-    public void DeleteExpenseType(Integer id){
+    public void deleteExpenseType(Integer id){
         expenseTypeRepository.deleteById(id);
     }
 

@@ -22,33 +22,33 @@ public class ExpenseClaimEntryController {
     @PostMapping("createExpenseClaimEntry")
     @ResponseStatus(HttpStatus.OK)
     public String CreateExpenseClaimEntry(@RequestBody Map<String, Object> expenseClaimEntryDTO) {
-        expenseClaimEntryService.CreateExpenseClaimEntry(expenseClaimEntryDTO);
+        expenseClaimEntryService.createExpenseClaimEntry(expenseClaimEntryDTO);
         return "expense claim entry created successfully";
     }
 
     @GetMapping("getExpenseClaimEntry")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetExpenseClaimEntry() {
-        return expenseClaimEntryService.GetExpenseClaimEntry();
+        return expenseClaimEntryService.getExpenseClaimEntry();
     }
 
     @GetMapping("getExpenseClaimEntryById/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetExpenseClaimEntryById(@PathVariable Integer id) {
-        return expenseClaimEntryService.GetExpenseClaimEntryById(id);
+        return expenseClaimEntryService.getExpenseClaimEntryById(id);
     }
 
     @PatchMapping("updateExpenseClaimEntry/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateExpenseClaimEntry(@PathVariable Integer id, @RequestBody Map<String, Object> expenseClaimEntryDTO) {
-        expenseClaimEntryService.UpdateExpenseClaimEntry(id, expenseClaimEntryDTO);
+        expenseClaimEntryService.updateExpenseClaimEntry(id, expenseClaimEntryDTO);
         return "expense claim entry updated successfully";
     }
 
     @DeleteMapping("deleteExpenseClaimEntry/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String DeleteExpenseClaimEntry(@PathVariable Integer id) {
-        expenseClaimEntryService.DeleteExpenseClaimEntry(id);
+        expenseClaimEntryService.deleteExpenseClaimEntry(id);
         return "expense claim entry deleted successfully";
     }
 

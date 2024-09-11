@@ -21,39 +21,39 @@ public class EmployeeController {
     @PostMapping("createEmployee")
     @ResponseStatus(HttpStatus.OK)
     public String CreateEmployee(@RequestBody Map<String, Object> employeeDTO) {
-        employeeService.CreateEmployee(employeeDTO);
+        employeeService.createEmployee(employeeDTO);
         return "Employee created successfully";
     }
 
     @GetMapping("getEmployees")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetEmployees() {
-        return employeeService.GetEmployees();
+        return employeeService.getEmployees();
     }
 
     @GetMapping("getEmployeeById/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetEmployeeById(@PathVariable Integer id) {
-        return  employeeService.GetEmployeeById(id);
+        return  employeeService.getEmployeeById(id);
     }
 
     @GetMapping("getEmployeeByDepartment/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<?> GetEmployeeByDepartment(@PathVariable Integer id) {
-        return employeeService.GetEmployeeByDepartment(id);
+        return employeeService.getEmployeeByDepartment(id);
     }
 
     @PatchMapping("updateEmployee/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String UpdateEmployee(@PathVariable Integer id, @RequestBody Map<String, Object> employeeDTO) {
-        employeeService.UpdateEmployee(id, employeeDTO);
+        employeeService.updateEmployee(id, employeeDTO);
         return "Employee updated successfully";
     }
 
     @DeleteMapping("deleteEmployee/{id}")
     @ResponseStatus(HttpStatus.OK)
     public String DeleteEmployee(@PathVariable Integer id) {
-        employeeService.DeleteEmployee(id);
+        employeeService.deleteEmployee(id);
         return "Employee deleted successfully";
     }
 }

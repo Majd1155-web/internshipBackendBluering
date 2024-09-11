@@ -37,7 +37,7 @@ public class ExpenseClaimEntryService {
         this.expenseClaimRepository = expenseClaimRepository;
     }
 
-    public void CreateExpenseClaimEntry(Map<String, Object> expenseClaimEntryDTO) {
+    public void createExpenseClaimEntry(Map<String, Object> expenseClaimEntryDTO) {
         ExpenseclaimentryEntity expenseClaimEntry = new ExpenseclaimentryEntity();
         if(expenseClaimEntryDTO.containsKey("date")) {
             String dateString = (String) expenseClaimEntryDTO.get("date");
@@ -63,7 +63,7 @@ public class ExpenseClaimEntryService {
         updateExpenseClaimTotal(expenseClaimEntry.getExpenseClaim());
     }
 
-    public List<ExpenseClaimEntryDTO> GetExpenseClaimEntry() {
+    public List<ExpenseClaimEntryDTO> getExpenseClaimEntry() {
         return expenseClaimEntryRepository.findAll()
                 .stream()
                 .map(expenseClaimEntry -> {
@@ -73,7 +73,7 @@ public class ExpenseClaimEntryService {
                 .collect(Collectors.toList());
     }
 
-    public List<ExpenseClaimEntryDTO> GetExpenseClaimEntryById(Integer id) {
+    public List<ExpenseClaimEntryDTO> getExpenseClaimEntryById(Integer id) {
         return expenseClaimEntryRepository.findById(id)
                 .stream()
                 .map(expenseClaimEntry -> {
@@ -83,7 +83,7 @@ public class ExpenseClaimEntryService {
                 .collect(Collectors.toList());
     }
 
-    public void UpdateExpenseClaimEntry(Integer id, Map<String, Object> expenseClaimEntryDTO) {
+    public void updateExpenseClaimEntry(Integer id, Map<String, Object> expenseClaimEntryDTO) {
         ExpenseclaimentryEntity expenseClaimEntry = expenseClaimEntryRepository.findById(id).get();
         if(expenseClaimEntryDTO.containsKey("date")) {
             String dateString = (String) expenseClaimEntryDTO.get("date");
@@ -109,7 +109,7 @@ public class ExpenseClaimEntryService {
         updateExpenseClaimTotal(expenseClaimEntry.getExpenseClaim());
     }
 
-    public void DeleteExpenseClaimEntry(Integer id) {
+    public void deleteExpenseClaimEntry(Integer id) {
         ExpenseclaimentryEntity expenseClaimEntry = expenseClaimEntryRepository.findById(id).orElse(null);
         if (expenseClaimEntry != null) {
             expenseClaimEntryRepository.deleteById(id);
