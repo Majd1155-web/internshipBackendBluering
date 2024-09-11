@@ -129,11 +129,11 @@ public class ExpenseClaimEntryService {
         expenseClaimRepository.save(expenseClaim);
     }
 
-    public Map<String, BigDecimal> getTotalClaimsByTypeForEmployee(Integer employeeId) {
-        List<Object[]> results = expenseClaimEntryRepository.findTotalClaimsByTypeForEmployee(employeeId);
-        return results.stream().collect(Collectors.toMap(
-                result -> (String) result[0],
-                result -> (BigDecimal) result[1]
-        ));
+    public BigDecimal getTotalClaimForEmployeeByType(Integer employeeId, Integer expenseTypeId) {
+        List<Object[]> results = expenseClaimEntryRepository.findTotalClaimByEmployeeAndTypeId(employeeId, expenseTypeId);
+        if (results.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        return (BigDecimal) results.get(0)[1];
     }
 }

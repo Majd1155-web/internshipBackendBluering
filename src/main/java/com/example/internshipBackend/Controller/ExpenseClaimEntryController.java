@@ -52,9 +52,9 @@ public class ExpenseClaimEntryController {
         return "expense claim entry deleted successfully";
     }
 
-    @GetMapping("getTotalClaimsByTypeForEmployee/{employeeId}")
+    @GetMapping("getTotalClaimForEmployeeByType/{employeeId}/{expenseTypeId}")
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, BigDecimal> getTotalClaimsByTypeForEmployee(@PathVariable Integer employeeId) {
-        return expenseClaimEntryService.getTotalClaimsByTypeForEmployee(employeeId);
+    public BigDecimal getTotalClaimForEmployeeByType(@PathVariable Integer employeeId, @PathVariable Integer expenseTypeId) {
+        return expenseClaimEntryService.getTotalClaimForEmployeeByType(employeeId, expenseTypeId);
     }
 }
